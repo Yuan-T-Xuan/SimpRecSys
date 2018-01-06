@@ -32,17 +32,30 @@ def getItemData(filename = "citeulike-a/raw-data.csv"):
     cleaned = [ ]
     for line in lines:
         cleaned.append(cleanText(line))
-    word2int = dict()
+    frequency = dict()
     for i in cleaned:
         for j in i:
-            if not j in word2int:
-                word2int[j] = len(word2int)
-    #print(len(cleaned))
-    #print(len(word2int))
+            if not j in frequency:
+                frequency[j] = 1
+            else:
+                frequency[j] += 1
+    l = [ ]
+    for i in frequency.items():
+        l.append(i)
+    l.sort(key=(lambda x : x[1]), reverse=True)
+    print(l[:30])
+    l = [ w[0] for w in l[:20000]]
+    random.shuffle(l)
+    #
+    word2int = dict()
+    for i in l:
+        word2int[i] = len(word2int)
     result = np.zeros((len(cleaned),len(word2int)))
+    print(result.shape)
     for i in range(len(cleaned)):
         for j in cleaned[i]:
-            result[i][word2int[j]] = 1.0
+            if j in word2int:
+                result[i][word2int[j]] = 1.0
     return result
 
 

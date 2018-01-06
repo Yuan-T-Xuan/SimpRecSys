@@ -9,11 +9,11 @@ def trainModel(BoWSize, EncodedSize, input_dim, output_dim, inputs, output, epoc
 
     # auto-encoder part
     ae01 = Dense(int(BoWSize), activation='relu')(item_input)
-    ae02 = Dense(int(BoWSize/2), activation='relu')(ae01)
-    ae03 = Dense(int(BoWSize/4), activation='relu')(ae02)
+    ae02 = Dense(int(BoWSize/4), activation='relu')(ae01)
+    ae03 = Dense(int(BoWSize/8), activation='relu')(ae02)
     ae_bottleneck = Dense(EncodedSize, activation='relu')(ae03)
-    ae05 = Dense(int(BoWSize/4), activation='relu')(ae_bottleneck)
-    ae06 = Dense(int(BoWSize/2), activation='relu')(ae05)
+    ae05 = Dense(int(BoWSize/8), activation='relu')(ae_bottleneck)
+    ae06 = Dense(int(BoWSize/4), activation='relu')(ae05)
     ae07 = Dense(int(BoWSize), activation='relu')(ae06)
     ae08 = Dense(int(BoWSize), activation='relu')(ae07)
 
