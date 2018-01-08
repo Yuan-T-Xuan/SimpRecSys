@@ -1,10 +1,13 @@
 import random
+import json
 import numpy as np
 from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 
 def cleanText(rawstr):
     lmtzr = WordNetLemmatizer()
+    stmmr = PorterStemmer()
     stopWords = set(stopwords.words('english'))
 
     rawstr = rawstr.lower()
@@ -21,7 +24,7 @@ def cleanText(rawstr):
             continue
         if word in stopWords:
             continue
-        result.append(lmtzr.lemmatize(word))
+        result.append(stmmr.stem(lmtzr.lemmatize(word)))
     return result
 
 
@@ -32,24 +35,11 @@ def getItemData(filename = "citeulike-a/raw-data.csv"):
     cleaned = [ ]
     for line in lines:
         cleaned.append(cleanText(line))
-    frequency = dict()
-    for i in cleaned:
-        for j in i:
-            if not j in frequency:
-                frequency[j] = 1
-            else:
-                frequency[j] += 1
-    l = [ ]
-    for i in frequency.items():
-        l.append(i)
-    l.sort(key=(lambda x : x[1]), reverse=True)
-    print(l[:30])
-    l = [ w[0] for w in l[:5000]]
-    random.shuffle(l)
     #
-    word2int = dict()
-    for i in l:
-        word2int[i] = len(word2int)
+    f = open("word2int.json")
+    word2int = json.loads(f.read())
+    f.close()
+    #
     result = np.zeros((len(cleaned),len(word2int)))
     print(result.shape)
     for i in range(len(cleaned)):
