@@ -14,5 +14,5 @@ print(input0_train.shape)
 print(input1_train.shape)
 print(output_train.shape)
 
-trainModel(BoWSize=20000, EncodedSize=200, input_dim=5551, output_dim=200, inputs=(input0_train,input1_train), output=output_train, epochs=3, batch_size=128, outfile_name="tmp-out.h5")
+trainModel(BoWSize=5000, EncodedSize=200, input_dim=5551, output_dim=200, inputs=(input0_train,input1_train), output=output_train, epochs=20, batch_size=128, outfile_name="tmp-out.h5")
 

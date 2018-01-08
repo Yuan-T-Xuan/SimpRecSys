@@ -44,7 +44,7 @@ def getItemData(filename = "citeulike-a/raw-data.csv"):
         l.append(i)
     l.sort(key=(lambda x : x[1]), reverse=True)
     print(l[:30])
-    l = [ w[0] for w in l[:20000]]
+    l = [ w[0] for w in l[:5000]]
     random.shuffle(l)
     #
     word2int = dict()
